@@ -1,0 +1,139 @@
+/* Reset default margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+}
+
+header {
+    background: #101203;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+.hero {
+    background-image: url(360_F_720817209_GqjgNrz9CQ9W785X53kf3dsVLBbJueao.webp);
+    background-size: cover;
+}
+#submit {
+    background: #ff5722;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1.2em;
+    align-items: center;
+}
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #000000;
+    padding: 10px 0;
+}
+
+.logo h1 {
+    margin: 0;
+    font-size: 100px;
+    margin-right: 350px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    font-size: 20px;
+    
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.hero {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.hero h2 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+.nav-links{
+    padding: 30px;
+}
+.cta-button {
+    background: #ff5722;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
+.cta-button:hover {
+    background: #e64a19;
+}
+
+section {
+    padding: 40px 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.feature {
+    background: #f4f4f4;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+.feature h3 {
+    margin-bottom: 10px;
+}
+
+.contactt {
+    padding: 20px;
+    margin-top: 20px;
+
+}
+
+#subject {
+    height: 170px;
+    width: 1000px;
+    margin-top: 20px;
+}
+#country {
+    margin-top: 20px;
+}
+#lname {
+    margin-top: 20px;
+}
+#fname {
+    margin-top: 20px;
+}
+
+footer {
+    background: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
