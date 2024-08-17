@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="headerBar">
+        <header>
+            <h1 class="title">My Budget Tracker</h1>
+            <h2 class="topbar">Your Current Balance</h2>
+            <p>
+                <span class="currency">$</span>
+                <span class="balance">0.00</span>
+            </p>
+        </header>
+    </div>
+
+    <div class="content">
+        <h3 class="secondTitle">Add a new transaction:</h3>
+        <div class="form">
+            <form id="expForm">
+                <div class="formLine">
+                    <label for="type">Type:</label>
+                    <select id="type" required>
+                        <option value="" disabled selected>Choose one...</option>
+                        <option value="income">Income</option>
+                        <option value="expense">Expense</option>
+                    </select>
+                </div>
+                <div id="alertBox" class="alert-box" style="display: none;"></div>
+                <div class="formLine">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="formLine">
+                    <label for="amount">Amount:</label>
+                    <input type="number" id="amount" step="0.01" required>
+                </div>
+                <button type="submit" class="buttonSave">Add to transactions</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="content">
+        <h3 class="secondTitle">Transactions:</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Amount</th>
+                   
+                </tr>
+            </thead>
+            <tbody id="transactionTable"></tbody>
+        </table>
+    </div>
+<div class = "oola">
+    <div class="contentt">
+        <h3 class="secondTitle">Expense Overview:</h3>
+        <canvas id="expenseChart"></canvas>
+    </div>
+
+    <div class="content2">
+        <h3 class="secondTitle">Transaction History:</h3>
+        <canvas id="historyChart"></canvas>
+    </div></div>
+
+    
+
+    <script src="script.js"></script>
+</body>
+</html>
