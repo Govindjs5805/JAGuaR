@@ -1,0 +1,99 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.headerBar {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+.title {
+    margin: 0;
+    font-size: 2em;
+}
+
+.topbar {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.alert-box {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 20px 0;
+    font-size: 16px;
+    display: none; /* Initially hidden */
+}
+
+.balance {
+    font-size: 2em;
+    color: #4CAF50;
+}
+
+.content {
+    margin: 20px;
+}
+
+.oola {
+    display: flex;
+}
+
+
+.contentt {
+    width: 1000px;
+}
+
+.content2 {
+    width: 1000px;
+}
+
+
+.formLine {
+    margin-bottom: 15px;
+}
+
+label {
+    margin-right: 10px;
+}
+
+input[type="text"], input[type="number"], select {
+    padding: 5px;
+    width: calc(100% - 120px);
+}
+
+.buttonSave {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.buttonSave:hover {
+    background-color: #45a049;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table th, .table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.table th {
+    background-color: #333;
+    color: white;
+    text-align: left;
+}
