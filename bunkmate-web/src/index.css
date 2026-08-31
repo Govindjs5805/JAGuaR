@@ -1,0 +1,170 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-text-primary;
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html, body, #root {
+    @apply h-full w-full m-0 p-0;
+  }
+}
+
+@layer components {
+  /* Custom Scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    @apply w-2;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-background-surface rounded-lg;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-primary/30 rounded-lg hover:bg-primary/50 transition-colors;
+  }
+
+  /* Card styles */
+  .card {
+    @apply bg-background-card rounded-2xl p-6 shadow-card border border-border transition-all duration-300;
+  }
+
+  .card-hover {
+    @apply hover:shadow-card-hover hover:border-primary/30 hover:scale-[1.02];
+  }
+
+  /* Button styles */
+  .btn-primary {
+    @apply bg-primary text-white px-6 py-3 rounded-xl font-semibold
+           hover:bg-primary-light transition-all duration-200
+           active:scale-95 shadow-glow-sm hover:shadow-glow;
+  }
+
+  .btn-secondary {
+    @apply bg-background-elevated text-text-primary px-6 py-3 rounded-xl font-semibold
+           border border-border hover:border-primary/50 transition-all duration-200
+           active:scale-95;
+  }
+
+  .btn-danger {
+    @apply bg-status-danger text-white px-6 py-3 rounded-xl font-semibold
+           hover:bg-red-600 transition-all duration-200
+           active:scale-95;
+  }
+
+  /* Input styles */
+  .input {
+    @apply bg-background-elevated border border-border rounded-xl px-4 py-3
+           text-text-primary placeholder:text-text-muted
+           focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary
+           transition-all duration-200;
+  }
+
+  /* Badge styles */
+  .badge {
+    @apply px-3 py-1 rounded-full text-xs font-semibold;
+  }
+
+  .badge-safe {
+    @apply bg-status-safe/20 text-status-safe border border-status-safe/30;
+  }
+
+  .badge-warning {
+    @apply bg-status-warning/20 text-status-warning border border-status-warning/30;
+  }
+
+  .badge-danger {
+    @apply bg-status-danger/20 text-status-danger border border-status-danger/30;
+  }
+
+  /* Glow effect on hover */
+  .glow-on-hover {
+    @apply transition-all duration-300 hover:shadow-glow;
+  }
+
+  /* Loading spinner */
+  .spinner {
+    @apply animate-spin rounded-full border-2 border-primary/30 border-t-primary;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent;
+  }
+
+  .bg-gradient-primary {
+    @apply bg-gradient-to-br from-primary via-primary-dark to-primary-darker;
+  }
+
+  .glass {
+    @apply bg-background-elevated/80 backdrop-blur-xl border border-border/50;
+  }
+}
+
+/* Custom animations */
+@keyframes slideInFromBottom {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromTop {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in-bottom {
+  animation: slideInFromBottom 0.3s ease-out;
+}
+
+.animate-slide-in-top {
+  animation: slideInFromTop 0.3s ease-out;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.3s ease-out;
+}

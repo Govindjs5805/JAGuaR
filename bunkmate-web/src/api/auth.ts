@@ -1,0 +1,200 @@
+import axios, { AxiosInstance, AxiosResponse } from "axios";
+import { API_CONFIG } from "../constants/config";
+import { kvHelper } from "../utils/storage";
+import {
+  LoginRequest,
+  LoginResponse,
+  ApiError,
+  UserProfile,
+  ResetOptionsResponse,
+} from "../types/api";
+
+class AuthService {
+  private api: AxiosInstance;
+
+  constructor() {
+    this.api = axios.create({
+      baseURL: API_CONFIG.BASE_URL,
+      timeout: API_CONFIG.TIMEOUT,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    this.api.interceptors.request.use(
+      (config) => {
+        const token = kvHelper.getAuthToken();
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+      },
+      (error) => Promise.reject(error)
+    );
+
+    this.api.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        if (error.response?.status === 401) {
+          kvHelper.clearAuthToken();
+        }
+        return Promise.reject(this.handleApiError(error));
+      }
+    );
+  }
+
+  private handleApiError(error: any): ApiError {
+    if (!import.meta.env.VITE_API_URL) {
+      return {
+        error: "Missing API Configuration",
+        message: "VITE_API_URL is not set. Please create a .env.local file with VITE_API_URL.",
+        status_code: 0,
+      };
+    }
+
+    if (error.response?.data) {
+      return {
+        error: error.response.data.error || "API Error",
+        message: error.response.data.message || error.message,
+        status_code: error.response.status,
+      };
+    }
+
+    return {
+      error: "Network Error",
+      message: error.message || "Something went wrong",
+      status_code: 0,
+    };
+  }
+
+  async lookupUsername(username: string): Promise<{ users: string[] }> {
+    try {
+      const response: AxiosResponse<{ users: string[] }> = await this.api.post(
+        API_CONFIG.ENDPOINTS.AUTH.LOOKUP,
+        { username }
+      );
+
+      return response.data;
+    } catch (error) {
+      throw this.handleApiError(error);
+    }
+  }
+
+  async login(credentials: LoginRequest): Promise<LoginResponse> {
+    try {
+      const response: AxiosResponse<LoginResponse> = await this.api.post(
+        API_CONFIG.ENDPOINTS.AUTH.LOGIN,
+        {
+          username: credentials.username,
+          password: credentials.password,
+          stay_logged_in: credentials.stay_logged_in ?? true,
+        }
+      );
+
+      kvHelper.setAuthToken(response.data.access_token);
+
+      return response.data;
+    } catch (error) {
+      throw this.handleApiError(error);
+    }
+  }
+
+  async getCurrentUser(): Promise<UserProfile> {
+    try {
+      const response: AxiosResponse<UserProfile> = await this.api.get(
+        API_CONFIG.ENDPOINTS.MY_PROFILE
+      );
+
+      return response.data;
+    } catch (error) {
+      throw this.handleApiError(error);
+    }
+  }
+
+  async logout(): Promise<void> {
+    kvHelper.clearAuthToken();
+  }
+
+  async refreshToken(): Promise<string | null> {
+    const access_token = kvHelper.getAuthToken();
+    if (!access_token) {
+      return null;
+    }
+    return access_token;
+  }
+
+  async isAuthenticated(): Promise<boolean> {
+    const token = kvHelper.getAuthToken();
+    return !!token;
+  }
+
+  async getCurrentToken(): Promise<string | null> {
+    return kvHelper.getAuthToken();
+  }
+
+  async setDefaultYear(year: string): Promise<void> {
+    try {
+      await this.api.post(API_CONFIG.ENDPOINTS.SET.DEFAULT_YEAR, {
+        default_academic_year: year,
+      });
+    } catch (error) {
+      throw this.handleApiError(error);
+    }
+  }
+
+  async setDefaultSemester(semester: string): Promise<void> {
+    try {
+      await this.api.post(API_CONFIG.ENDPOINTS.SET.DEFAULT_SEMESTER, {
+        default_semester: semester,
+      });
+    } catch (error) {
+      throw this.handleApiError(error);
+    }
+  }
+
+  async GetResetPasswordOptions(
+    username: string
+  ): Promise<ResetOptionsResponse> {
+    try {
+      const res = await this.api.post(API_CONFIG.ENDPOINTS.AUTH.RESET.OPTIONS, {
+        username,
+      });
+      return res.data;
+    } catch (error) {
+      throw this.handleApiError(error);
+    }
+  }
+
+  async RequestPasswordReset(
+    username: string,
+    option: "mail" | "sms"
+  ): Promise<void> {
+    try {
+      await this.api.post(API_CONFIG.ENDPOINTS.AUTH.RESET.REQUEST, {
+        username,
+        option,
+      });
+    } catch (error) {
+      throw this.handleApiError(error);
+    }
+  }
+
+  async VerifyPasswordReset(
+    username: string,
+    otp: string,
+    password: string
+  ): Promise<void> {
+    try {
+      await this.api.post(API_CONFIG.ENDPOINTS.AUTH.RESET.VERIFY, {
+        username,
+        otp,
+        password,
+        password_confirmation: password,
+      });
+    } catch (error) {
+      throw this.handleApiError(error);
+    }
+  }
+}
+
+export const authService = new AuthService();

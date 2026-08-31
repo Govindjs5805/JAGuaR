@@ -1,0 +1,328 @@
+export interface ResetOptionsResponse {
+  username: string;
+  options: {
+    emails: string[];
+    mobiles: string[];
+  };
+}
+
+export interface LoginRequest {
+  username: string;
+  password: string;
+  stay_logged_in?: boolean;
+}
+
+export interface LoginResponse {
+  access_token: string;
+  token_type: string;
+}
+
+export interface User {
+  id: number;
+  username: string;
+  email: string;
+  mobile: string;
+  settings: {
+    default_institutionUser: number;
+    default_institute: number;
+    default_academic_year: string;
+    default_semester: "odd" | "even" | "0";
+  };
+}
+
+export interface UserProfile {
+  first_name: string;
+  last_name: string;
+  user: User;
+}
+
+export interface Course {
+  id: number;
+  si_no: number;
+  name: string;
+  code: string;
+  start_year: null;
+  end_year: null;
+  institution_id: number;
+  usersubgroup_id: number;
+  created_by: number;
+  created_at: string;
+  updated_at: string;
+  academic_year: string;
+  academic_semester: string;
+  pre_requisites: null;
+  ltp_credits: null;
+  reference_docs: null;
+  text_books: null;
+  course_type_id: number;
+  course_category_id: null;
+  deleted_at: null;
+  enable_laboratory: null;
+}
+
+interface Session {
+  id: number;
+  name: string;
+  time_from: null;
+  time_to: null;
+  view_order: string;
+  institution_id: number;
+  deleted_at: null;
+  created_at: string | null;
+  updated_at: string;
+  type: null;
+}
+
+export interface AttendanceType {
+  id: number;
+  name: string;
+  code: string;
+  color: string;
+  view_order: string;
+  positive_report_value: number;
+  institution_id: number;
+  deleted_at: null;
+  created_at: null;
+  updated_at: string | null;
+}
+
+interface AttendanceRecord {
+  course: number | null;
+  attendance: number | null;
+  marked_by: number | null;
+}
+
+export interface DailyAttendance {
+  [sessionId: string]: AttendanceRecord;
+}
+
+export interface AttendanceApiResponse {
+  courses: Record<string, Course>;
+  sessions: Record<string, Session>;
+  attendanceTypes: Record<string, AttendanceType>;
+  studentAttendanceData: Record<string, DailyAttendance>;
+}
+
+export interface Subject {
+  id: number;
+  name: string;
+  code: string;
+  credits: number;
+  course: number;
+  semester: string;
+  is_active: boolean;
+}
+
+export interface AttendanceDetailedResponse {
+  total_subjects: number;
+  overall_percentage: number;
+  subjects: SubjectAttendance[];
+}
+
+export interface SubjectAttendance {
+  subject: Subject;
+  total_classes: number;
+  attended_classes: number;
+  percentage: number;
+  last_updated: string;
+  status: "safe" | "warning" | "danger";
+}
+
+export interface ApiError {
+  error: string;
+  message: string;
+  status_code: number;
+}
+
+// Survey Attempt interfaces
+interface SurveyDetail {
+  id: number;
+  name: string;
+  summary: string;
+  academic_year: string;
+  start_at: string;
+  end_at: string;
+  time_required: number | null;
+  grouping_tag: string | null;
+  survey_type: "student_feedback";
+  survey_mode: "online";
+  comment_feedback: 0 | 1;
+  hidden: 0 | 1;
+  is_anonymous: 0 | 1;
+  course_id: number | null;
+  usersubgroup_id: number | null;
+  institution_id: number;
+  created_by: number;
+  created_at: string;
+  updated_at: string;
+  course: any | null;
+  usersubgroup: any | null;
+}
+
+interface Choice {
+  id: number;
+  name: string;
+  summary: null;
+  score: string;
+  offline_evaluation_count: null;
+  survey_question_id: number;
+  created_by: number;
+  created_at: string | null;
+  updated_at: string | null;
+}
+
+export interface QuestionChoice {
+  id: number;
+  question_no: string;
+  name: string;
+  summary: null;
+  allow_descriptive: number;
+  answer_required: number;
+  survey_id: number;
+  grouping_tag: null;
+  institution_id: number;
+  created_by: number;
+  created_at: string;
+  updated_at: string;
+  choices: Choice[];
+  course_outcomes: any[];
+  programme_outcomes: any[];
+  programme_specific_outcomes: any[];
+}
+
+interface CourseDetail {
+  id: number;
+  si_no: number;
+  name: string;
+  code: string;
+  start_year: null;
+  end_year: null;
+  institution_id: number;
+  usersubgroup_id: number;
+  created_by: number;
+  created_at: string;
+  updated_at: string;
+  academic_year: string;
+  academic_semester: string;
+  pre_requisites: null;
+  ltp_credits: null;
+  reference_docs: null;
+  text_books: null;
+  course_type_id: number;
+  course_category_id: null;
+  deleted_at: null;
+  enable_laboratory: null;
+}
+
+interface Teacher {
+  id: number;
+  first_name: string;
+  last_name: string;
+  gender: null;
+  birth_date: null;
+  address_street: null;
+  address_city: null;
+  address_state: null;
+  address_postcode: null;
+  address_country: null;
+  email: string;
+  mobile: string;
+  guardian_email: null;
+  guardian_mobile: null;
+  settings: Record<string, any> | [];
+  institution_id: number;
+  user_id: number;
+  institutionrole_id: number;
+  institution_approved: number;
+  user_approved: number;
+  created_at: string;
+  updated_at: string;
+  admission_no: null;
+  register_no: null;
+  aadhaar_card_no: null;
+  code_of_institution_last_attended: null;
+  district_of_institution_last_attended: null;
+  last_institution: null;
+  contact_address: null;
+  enroll_status: string;
+  user_data_completed: number;
+}
+
+interface SurveyCourseTeacher {
+  id: number;
+  stud_f_b_survey_id: number;
+  course_id: number;
+  teacher_id: number;
+  created_at: string | null;
+  updated_at: string | null;
+  course: CourseDetail;
+  teacher: Teacher;
+}
+
+export interface SurveyStartData {
+  studFBSurvey: SurveyDetail;
+  questionsChoices: QuestionChoice[];
+  surveyCourceTeachers: SurveyCourseTeacher[];
+}
+
+type AttendanceValue = "Present" | "Absent" | "Late" | "P" | "A" | "L" | string;
+
+export interface CourseSchedule {
+  id: number;
+  subject_id: string;
+  day: number;
+  hour: number;
+  month: number;
+  year: number;
+
+  final_attendance: AttendanceValue;
+  teacher_attendance: AttendanceValue | null;
+  user_attendance: AttendanceValue | null;
+  attendance?: AttendanceValue | null;
+
+  is_conflict: number; // 0 | 1
+  is_user_override: number; // 0 | 1
+  is_entered_by_professor: number; // 0 | 1
+  is_entered_by_student: number; // 0 | 1
+
+  created_at?: number | string; // UNIX timestamp (ms)
+  updated_at?: number | string; // UNIX timestamp (ms)
+  last_teacher_update?: number | null;
+  last_user_update?: number | null;
+}
+
+export interface Message {
+  id: string | number;
+  sender_id: string;
+  sender_name: string;
+  content: string;
+  timestamp: string;
+  image_url?: string;
+}
+
+export interface GifMedia {
+  url: string;
+}
+
+export interface KlipyGifFormat {
+  gif?: GifMedia;
+  webp?: GifMedia;
+  jpg?: GifMedia;
+  mp4?: GifMedia;
+  webm?: GifMedia;
+}
+
+export interface GifData {
+  id: number;
+  slug?: string;
+  title?: string;
+  type?: string;
+  blur_preview?: string;
+  tags?: string[];
+  file?: {
+    hd?: KlipyGifFormat;
+    md?: KlipyGifFormat;
+    sm?: KlipyGifFormat;
+    xs?: KlipyGifFormat;
+  };
+}

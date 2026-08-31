@@ -1,0 +1,86 @@
+export const API_CONFIG = {
+  BASE_URL: (import.meta.env.VITE_API_URL || "") + "/api/v1/Xcr45_salt",
+  API_VERSION: "v1",
+  ENDPOINTS: {
+    AUTH: {
+      LOGIN: "/login",
+      LOOKUP: "/login/lookup",
+      USER: "/user",
+      RESET: {
+        OPTIONS: "/password/reset/options",
+        REQUEST: "/password/reset/request",
+        VERIFY: "/password/reset",
+      },
+    },
+    ATTENDANCE: {
+      DETAILED: "/attendancereports/student/detailed",
+      SUMMARY: "/attendancereports/student/summary",
+    },
+    INSTITUTIONS: "/institutions",
+    COURSES: "/courses",
+    SUBJECTS: "/subjects",
+    NOTIFICATIONS: "/user/notifications",
+    MY_PROFILE: "/myprofile",
+    EXAMS_AND_ASSIGNMENTS: {
+      GET: "/exams",
+      GET_QUESTIONS: (id: string) =>
+        `/exams/${id}/examquestions?from_view_score=true`,
+      GET_ANSWERS: (id: string) => `/exams/${id}/institutionuser/examanswers`,
+      GET_Q_GROUPS: (id: string) => `/examorquestiongroups?exam_id=${id}`,
+    },
+    SET: {
+      DEFAULT_YEAR: "/user/setting/default_academic_year",
+      DEFAULT_SEMESTER: "/user/setting/default_semester",
+    },
+    SURVEY: {
+      GET: "/studfbsurveys",
+    },
+    INSIGHTS: {
+      LOG: "/insights",
+    },
+  },
+  TIMEOUT: 60000, // 60 seconds
+  RETRY_ATTEMPTS: 3,
+};
+
+export const ATTENDANCE_THRESHOLDS = {
+  DANGER: 75,
+  WARNING: 80,
+  SAFE: 85,
+};
+
+export const APP_CONFIG = {
+  NAME: "BunkMate",
+  VERSION: "3.0.0",
+  DESCRIPTION: "Track your attendance and stay above 75%",
+};
+
+export const AUTH_ACCESS_TOKEN = "access_token";
+export const THEME_MODE = "mode";
+export const INSIGHTS_LOGGED = "insights_logged";
+export const INSIGHTS_LOGGED_CODE = "ABCD_12348_";
+
+export const CHAT_CONFIG = {
+  GET_MESSAGES: (offset: number, limit: number, API_BASE_URL: string): string => {
+    return `${API_BASE_URL}/get-messages/${offset}/${limit}`;
+  },
+  KLIPY_API_KEY: import.meta.env.VITE_KLIPY_API_KEY || "",
+  KLIPY_API_URL: import.meta.env.VITE_KLIPY_API_URL || "",
+};
+
+export const KTU_SCRAPER_CONFIG = {
+  BASE_URL: import.meta.env.VITE_KTU_SCRAPER_BASE_URL || "",
+  login: "/login",
+  getCsrfToken: "/get-grade-card-token",
+  getGradeCard: "/grade-card",
+  timeLimit: 420000, // 7 minutes
+};
+
+export const INSIGHTS_API_URL = import.meta.env.VITE_INSIGHTS_URL || "";
+
+export const UPDATE_API_CONFIG = {
+  BASE_URL: INSIGHTS_API_URL,
+  VERSION: INSIGHTS_API_URL + "/version",
+};
+
+export const OVERVIEW_URL = import.meta.env.VITE_OVERVIEW_URL || "";
